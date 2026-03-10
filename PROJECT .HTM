@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Advance Customer Obsession Comparison Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        /* Login Page */
+        .loginPage {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        .login-box h2 { color: #333; margin-bottom: 30px; }
+        .login-box input {
+            width: 90%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        .login-box button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 90%;
+            margin-top: 10px;
+        }
+        
+        /* Main Site */
+        #site { display: none; }
+        nav {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav h2 { color: #ffeb3b; }
+        .cart-nav {
+            position: relative;
+            cursor: pointer;
+        }
+        #cartCount {
+            background: #e74c3c;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .search {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .search h1 { color: #2c3e50; margin-bottom: 20px; }
+        .search input {
+            width: 400px;
+            max-width: 90%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+        .search button {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .product {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .product img {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        .product h3 { color: #2c3e50; font-size: 20px; }
+        
+        /* Models Section */
+        .models {
+            display: none;
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .models h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .model {
+            background: #f8f9fa;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .model h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .price-table th, .price-table td {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: center;
+        }
+        .price-table th {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            font-weight: bold;
+        }
+        .best {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            border: none;
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            color: white;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        
+        /* Cart Page */
+        .cart-page {
+            display: none;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+        .cart-total {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: right;
+            margin: 20px 0;
+        }
+        .checkout-btn {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
+        }
+        
+        .back-btn {
+            background: #95a5a6;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .products { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding: 20px; }
+            .search input { width: 90%; margin-bottom: 10px; }
+            .price-table { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="loginPage">
+        <div class="login-box">
+            <h2>Customer Portal Login</h2>
+            <input placeholder="Username" id="username">
+            <input type="password" placeholder="Password" id="password">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Main Site -->
+    <div id="site">
+        <nav>
+            <h2>🛒 Customer Obsession Portal</h2>
+            <div class="cart-nav" onclick="showCart()">
+                Cart <span id="cartCount">0</span>
+            </div>
+        </nav>
+
+        <div class="search">
+            <h1>Find Best Price Online</h1>
+            <input id="searchInput" placeholder="Search shoes, mobiles, laptops...">
+            <button onclick="searchProduct()">Search</button>
+        </div>
+
+        <div class="products" id="productList">
+            <div class="product" onclick="showModels('shoes')">
+                <img src="images/shoes.jpg" alt="Shoes">
+                <h3>Shoes</h3>
+            </div>
+            <div class="product" onclick="showModels('mobiles')">
+                <img src="images/iphone.jpg" alt="Mobiles">
+                <h3>Mobiles</h3>
+            </div>
+            <div class="product" onclick="showModels('laptops')">
+                <img src="images/laptop.jpg" alt="Laptops">
+                <h3>Laptops</h3>
+            </div>
+            <div class="product" onclick="showModels('headphones')">
+                <img src="images/headphones.jpg" alt="Headphones">
+                <h3>Headphones</h3>
+            </div>
+            <div class="product" onclick="showModels('watch')">
+                <img src="images/watch.jpg" alt="Watches">
+                <h3>Watches</h3>
+            </div>
+            <div class="product" onclick="showModels('bags')">
+                <img src="images/bag.jpg" alt="Bags">
+                <h3>Bags</h3>
+            </div>
+            <div class="product" onclick="showModels('keyboard')">
+                <img src="images/kb.jpg" alt="Keyboard">
+                <h3>Keyboard</h3>
+            </div>
+            <div class="product" onclick="showModels('mouse')">
+                <img src="images/mouse.jpg" alt="Mouse">
+                <h3>Mouse</h3>
+            </div>
+        </div>
+
+        <!-- Models Display -->
+        <div class="models" id="modelsArea">
+            <h2 id="modelTitle"></h2>
+            <div id="modelContent"></div>
+        </div>
+
+        <!-- Cart Page -->
+        <div class="cart-page" id="cartPage">
+            <button class="btn back-btn" onclick="showMain()">← Back to Products</button>
+            <h2>Your Cart</h2>
+            <div id="cartItemsList"></div>
+            <div class="cart-total" id="cartTotal">Total: ₹0</div>
+            <button class="btn checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        
+        // Fake product data with realistic 2026 prices
+        const productData = {
+            shoes: {
+                title: "Puma Shoes Models",
+                models: [
+                    { name: "Puma RS-X", prices: [3999, 3799, 3499, 3699] },
+                    { name: "Puma Velocity", prices: [2999, 2799, 2899, 2950] },
+                    { name: "Puma Rider", prices: [4200, 3999, 3899, 4050] },
+                    { name: "Puma Ignite", prices: [3500, 3300, 3400, 3450] },
+                    { name: "Puma Flyer", prices: [3100, 2999, 2890, 3000] }
+                ]
+            },
+            mobiles: {
+                title: "iPhone Models",
+                models: [
+                    { name: "iPhone 16", prices: [79999, 77999, 75999, 78999] },
+                    { name: "iPhone 16 Pro", prices: [109999, 107999, 105999, 108999] },
+                    { name: "iPhone 15", prices: [64999, 63999, 62999, 63599] },
+                    { name: "iPhone SE 2026", prices: [49999, 48999, 47999, 48599] },
+                    { name: "iPhone 14", prices: [54999, 53999, 52999, 53599] }
+                ]
+            },
+            laptops: {
+                title: "Laptop Models",
+                models: [
+                    { name: "Dell XPS 13", prices: [89999, 87999, 85999, 88999] },
+                    { name: "MacBook Air M3", prices: [99999, 97999, 95999, 98999] },
+                    { name: "HP Pavilion", prices: [59999, 57999, 56999, 58999] },
+                    { name: "Lenovo ThinkPad", prices: [74999, 72999, 71999, 73999] },
+                    { name: "ASUS VivoBook", prices: [64999, 62999, 61999, 63999] }
+                ]
+            },
+            headphones: {
+                title: "Headphones Models",
+                models: [
+                    { name: "Sony WH-1000XM6", prices: [29999, 28999, 27999, 28599] },
+                    { name: "Apple AirPods Pro 3", prices: [24999, 23999, 22999, 23599] },
+                    { name: "Bose QC Ultra", prices: [32999, 31999, 30999, 31599] },
+                    { name: "JBL Live 770NC", prices: [12999, 11999, 10999, 11599] },
+                    { name: "OnePlus Buds Pro 3", prices: [11999, 10999, 9999, 10599] }
+                ]
+            },
+            watch: {
+                title: "Smartwatch Models",
+                models: [
+                    { name: "Apple Watch 10", prices: [39999, 38999, 37999, 38599] },
+                    { name: "Samsung Galaxy Watch7", prices: [29999, 28999, 27999, 28599] },
+                    { name: "OnePlus Watch 3", prices: [22999, 21999, 20999, 21599] },
+                    { name: "Boat Xtend Pro", prices: [4999, 4499, 3999, 4299] },
+                    { name: "Noise ColorFit Pro 5", prices: [5999, 5499, 4999, 5299] }
+                ]
+            },
+            bags: {
+                title: "Bag Models",
+                models: [
+                    { name: "Wildcraft Trek 45L", prices: [3999, 3699, 3499, 3599] },
+                    { name: "American Tourister", prices: [2999, 2799, 2699, 2759] },
+                    { name: "Skybags Urban", prices: [2499, 2299, 2199, 2259] },
+                    { name: "Fastrack Backpack", prices: [1999, 1799, 1699, 1759] },
+                    { name: "Nike Utility Bag", prices: [4499, 4199, 4099, 4159] }
+                ]
+            },
+            keyboard: {
+                title: "Keyboard Models",
+                models: [
+                    { name: "Logitech MX Keys", prices: [9999, 9499, 8999, 9299] },
+                    { name: "Razer BlackWidow", prices: [12999, 11999, 10999, 11599] },
+                    { name: "Apple Magic Keyboard", prices: [8999, 8499, 7999, 8299] },
+                    { name: "Zebronics Wired", prices: [999, 899, 799, 849] },
+                    { name: "HP 320K", prices: [1499, 1299, 1199, 1259] }
+                ]
+            },
+            mouse: {
+                title: "Mouse Models",
+                models: [
+                    { name: "Logitech MX Master 3S", prices: [7999, 7499, 6999, 7299] },
+                    { name: "Razer DeathAdder V3", prices: [5999, 5499, 4999, 5299] },
+                    { name: "Apple Magic Mouse", prices: [5999, 5499, 4999, 5299] },
+                    { name: "Logitech M185", prices: [999, 899, 799, 849] },
+                    { name: "HP 280 Wireless", prices: [1499, 1299, 1199, 1259] }
+                ]
+            }
+        };
+
+        function login() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('site').style.display = 'block';
+        }
+
+        function searchProduct() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let products = document.querySelectorAll('.product');
+            products.forEach(p => {
+                let text = p.innerText.toLowerCase();
+                p.style.display = text.includes(input) ? 'block' : 'none';
+            });
+        }
+
+        function showModels(product) {
+            document.getElementById('modelsArea').style.display = 'block';
+            document.getElementById('cartPage').style.display = 'none';
+            
+            let data = productData[product];
+            let html = '';
+            let title = data.title;
+            
+            data.models.forEach(model => {
+                let prices = model.prices;
+                let min = Math.min(...prices);
+                html += createModelHTML(model.name, prices, min);
+            });
+            
+            document.getElementById('modelTitle').innerText = title;
+            document.getElementById('modelContent').innerHTML = html;
+            window.scrollTo(0, 0);
+        }
+
+        function createModelHTML(name, prices, minPrice) {
+            let platforms = ['Amazon', 'Flipkart', 'Meesho', 'Ajio'];
+            let html = `
+                <div class="model">
+                    <h3>${name}</h3>
+                    <table class="price-table">
+                        <tr>
+                            <th>App</th>
+                            <th>Price</th>
+                        </tr>
+                        <tr>
+                            <td>Amazon</td>
+                            <td>${markPrice(prices[0], minPrice)}</td>
+                        </tr>
+                        <tr>
+                            <td>Flipkart</td>
+                            <td>${markPrice(prices[1], minPrice)}</td>
+                        </tr>
+                        <tr>
+                            <td>Meesho</td>
+                            <td>${markPrice(prices[2], minPrice)}</td>
+                        </tr>
+                        <tr>
+                            <td>Ajio</td>
+                            <td>${markPrice(prices[3], minPrice)}</td>
+                        </tr>
+                    </table>
+                    <button class="btn" onclick="addToCart('${name}', ${minPrice})">Add to Cart (₹${minPrice})</button>
+                    <button class="btn" onclick="buyNow('${name}', ${minPrice})">Buy Now (₹${minPrice})</button>
+                </div>
+            `;
+            return html;
+        }
+
+        function markPrice(price, min) {
+            return price === min ? 
+                `<span class="best">₹${price} BEST</span>` : 
+                `₹${price}`;
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartCount();
+            alert(`${name} added to cart!`);
+        }
+
+        function buyNow(name, price) {
+            cart = [{ name, price }];
+            showCart();
+        }
+
+        function updateCartCount() {
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        function showCart() {
+            document.getElementById('modelsArea').style.display = 'none';
+            document.getElementById('cartPage').style.display = 'block';
+            document.getElementById('productList').style.display = 'none';
+            
+            let html = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                html += `
+                    <div class="cart-item">
+                        <span>${item.name} - ₹${item.price}</span>
+                        <button class="btn" onclick="removeFromCart('${item.name}')">Remove</button>
+                    </div>
+                `;
+                total += item.price;
+            });
+            
+            document.getElementById('cartItemsList').innerHTML = html;
+            document.getElementById('cartTotal').innerText = `Total: ₹${total}`;
+            updateCartCount();
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            showCart();
+        }
+
+        function showMain() {
+            document.getElementById('cartPage').style.display = 'none';
+            document.getElementById('productList').style.display = 'grid';
+            document.getElementById('modelsArea').style.display = 'none';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            alert('Thank you for your purchase! Order placed successfully.');
+            cart = [];
+            updateCartCount();
+            showMain();
+        }
+
+        // Enter key search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchProduct();
+        });
+    </script>
+</body>
+</html>
